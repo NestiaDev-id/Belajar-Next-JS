@@ -17,7 +17,7 @@ function AppShell(props: AppShellProps) {
       {!disableNavbar.includes(pathname) && <Navbar />}
       {/* <Navbar /> */}
       {children}
-      <footer className="footer">Footer</footer>
+      {/* <footer className="footer">Footer</footer> */}
     </main>
   );
 }
