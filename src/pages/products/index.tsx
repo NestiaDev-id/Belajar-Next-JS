@@ -1,63 +1,33 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import ProductView from "../../views/products/index";
+import useSWR from "swr";
 
-// Tipe untuk produk individual
-type Product = {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  image: string;
-  category: string;
-  stock: number;
-};
-
-// Tipe untuk respons API
-type ProductResponse = {
-  status: boolean;
-  statusCode: number;
-  data: Product[];
-};
+// Fetcher function untuk SWR
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 function ProductPage() {
   const [isLogin, setIsLogin] = useState(true);
-  const [products, setProducts] = useState<Product[]>([]);
   const { push } = useRouter();
 
+  // Redirect ke halaman login jika belum login
   useEffect(() => {
-    // Redirect ke halaman login jika belum login
     if (!isLogin) {
       push("/auth/login");
     }
   }, [isLogin, push]);
 
-  useEffect(() => {
-    // Fetch data produk dari API
-    fetch("/api/product")
-      .then((res) => res.json())
-      .then((response: ProductResponse) => {
-        console.log(response);
-        if (response.status) {
-          setProducts(response.data); // Simpan data produk ke state
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-      });
-  }, []);
+  // Menggunakan SWR untuk mengambil data produk
+  const { data, error, isLoading } = useSWR("/api/product", fetcher);
+
+  if (error) {
+    return <div>Error loading products.</div>;
+  }
 
   return (
     <div>
-      <h1>Product Page</h1>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            <h2>{product.name}</h2>
-            <p>{product.description}</p>
-            <p>Price: ${product.price}</p>
-          </li>
-        ))}
-      </ul>
+      {/* Mengirimkan satu parameter ke ProductView */}
+      <ProductView data={data?.data || []} isLoading={isLoading} />
     </div>
   );
 }

@@ -1,0 +1,88 @@
+.product {
+    width: 100%;
+    padding: 0 5%;
+
+    &__title {
+        font-weight: bold;
+        font-size: 32px;
+        text-align: center;
+    }
+
+    &__content {
+        display: flex;
+        flex-wrap: wrap;
+
+        &__skeleton {
+            width: 25%; // Sama dengan item produk
+            padding: 10px; // Sama dengan item produk
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: blinking 1.75s infinite; // Tambahkan animasi blinking
+
+            &__image {
+                width: 100%;
+                height: 200px; // Atur tinggi gambar skeleton
+                border-radius: 10px;
+                background-color: #e0e0e0;
+            }
+
+            &__name,
+            &__price,
+            &__category {
+                width: 100%;
+                height: 20px;
+                border-radius: 10px;
+                background-color: #e0e0e0;
+                margin-top: 10px;
+            }
+        }
+
+        &__item {
+            width: 25%;
+            padding: 10px;
+
+            &__name {
+                font-weight: bold;
+                font-size: 20px;
+            }
+
+            &__price {
+                font-weight: bold;
+            }
+
+            &__category {
+                color: grey;
+            }
+        }
+    }
+
+    // Media query untuk responsivitas
+    @media (max-width: 768px) {
+        &__content__item,
+        &__content__skeleton {
+            width: 50%; // Sama untuk skeleton dan item produk
+        }
+    }
+
+    @media (max-width: 480px) {
+        &__content__item,
+        &__content__skeleton {
+            width: 100%; // Sama untuk skeleton dan item produk
+        }
+    }
+}
+
+// Tambahkan animasi skeleton-loading
+@keyframes blinking {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
