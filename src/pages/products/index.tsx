@@ -7,15 +7,15 @@ import useSWR from "swr";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 function ProductPage() {
-  const [isLogin, setIsLogin] = useState(true);
+  // const [isLogin, setIsLogin] = useState(true);
   const { push } = useRouter();
 
   // Redirect ke halaman login jika belum login
-  useEffect(() => {
-    if (!isLogin) {
-      push("/auth/login");
-    }
-  }, [isLogin, push]);
+  // useEffect(() => {
+  //   if (!isLogin) {
+  //     push("/auth/login");
+  //   }
+  // }, [isLogin, push]);
 
   // Menggunakan SWR untuk mengambil data produk
   const { data, error, isLoading } = useSWR("/api/product", fetcher);
