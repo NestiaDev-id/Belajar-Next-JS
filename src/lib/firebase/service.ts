@@ -13,3 +13,14 @@ export async function getData(collectionName: string) {
     throw error; // Lempar error agar bisa ditangani di tempat lain
   }
 }
+
+export async function getDataById(collectionName: string, id: string) {
+  try {
+    const snapshot = await getDocs(collection(firestore, collectionName));
+    const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    return data.find((item) => item.id === id);
+  } catch (error) {
+    console.error(`Error fetching data from collection "${collectionName}":`, error);
+    throw error; // Lempar error agar bisa ditangani di tempat lain
+  }
+}

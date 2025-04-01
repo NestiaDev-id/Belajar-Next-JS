@@ -1,0 +1,18 @@
+.productDetail {
+  width: 25%;
+  padding: 10px;
+  margin: 0 auto;
+
+  &__name {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  &__price {
+    font-weight: bold;
+  }
+
+  &__category {
+    color: grey;
+  }
+}
