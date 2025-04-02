@@ -3,6 +3,7 @@ import styles from "./Login.module.scss";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 
 const loginView = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -79,10 +80,21 @@ const loginView = () => {
             {isLoading ? "Loading..." : "Login"}
           </button>
         </form>
-        <p className={styles.login__form__link}>
-          Belum punya akun? <Link href="/auth/register">Register</Link>
-        </p>
+        <button
+          onClick={() =>
+            signIn("google", {
+              credentials: false,
+              redirect: false,
+            })
+          }
+          className={styles.login__form__item__google}
+        >
+          Sign in with Goggle
+        </button>
       </div>
+      <p className={styles.login__form__link}>
+        Belum punya akun? <Link href="/auth/register">Register</Link>
+      </p>
     </div>
   );
 };
